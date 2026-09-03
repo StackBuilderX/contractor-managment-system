@@ -27,7 +27,7 @@ const Suppliers = () => {
 
          try {
 
-            const response = await fetch("http://localhost:8080/api/suppliers", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/suppliers`, {
                method: "GET",
                headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,

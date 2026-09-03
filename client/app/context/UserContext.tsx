@@ -28,7 +28,7 @@ export const UserProvider = ({ children }: {children : ReactNode}) => {
 
       try {
          
-         const response = await fetch("http://localhost:8080/api/users", {
+         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
             method : "GET",
             headers : {
                Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ export const UserProvider = ({ children }: {children : ReactNode}) => {
                return;
             }
 
-            const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`, {
                method: "GET",
                headers: {
                   Authorization: `Bearer ${token}`,

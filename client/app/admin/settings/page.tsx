@@ -78,7 +78,7 @@ export default function SettingsPage() {
       formData.append("file", file);
 
       try {
-         const response = await fetch(`http://localhost:8080/api/users/${user.id}/profile-image`, {
+         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${user.id}/profile-image`, {
             method: "POST",
             headers: {
                Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -117,7 +117,7 @@ export default function SettingsPage() {
       formData.append("file", file);
 
       try {
-         const response = await fetch(`http://localhost:8080/api/users/${user.id}`, {
+         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${user.id}`, {
             method: "PATCH",
             headers: {
                Authorization: `Bearer ${localStorage.getItem("token")}`,

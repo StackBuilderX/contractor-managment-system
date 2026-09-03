@@ -30,7 +30,7 @@ const page = () => {
                return;
             }
 
-            const response = await fetch(`http://localhost:8080/api/users/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${id}`, {
                method: "GET",
                headers : {
                   Authorization: `Bearer ${token}`
