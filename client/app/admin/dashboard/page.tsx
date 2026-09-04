@@ -4,14 +4,17 @@ import { useUser } from "@/app/context/UserContext"
 import { HardHat, Truck, User, UserPlus } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts"
+import { useEffect, useState } from "react"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, Cell } from "recharts"
 
 
 const Dashboard = () => {
 
-   const {users} = useUser()
+   const {users, fetchUsers} = useUser()
 
+   useEffect(() => {
+      fetchUsers()
+   },[])
       
    const suppliers = users.filter(user => user.role === "SUPPLIER")
    const contractors = users.filter(user => user.role === "CONTRACTOR")
@@ -72,18 +75,31 @@ const Dashboard = () => {
 
    const lastFiveUsers = [...users].sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() ).slice(0,4)
 
+   
+   const month = new Date().getMonth();
+
+      
+   const calcNumbersOfUsersByMonth = (monthIndex: number) => {
+      const count = users.filter((user) => {
+         const date = new Date(user.createdAt);
+         return date.getMonth() === monthIndex
+      }).length;
+      return count;
+   } 
+   
    const userGrowthData = [
-      { month: "Jan", users: 120 },
-      { month: "Feb", users: 180 },
-      { month: "Mar", users: 189 },
-      { month: "Apr", users: 201 },
-      { month: "May", users: 320 },
-      { month: "Jun", users: 350 },
-      { month: "Jul", users: 402 },
-      { month: "aout", users: 490 },
-      { month: "sept", users: 570 },
-      { month: "oct", users: 600 },
-      { month: "dec", users: 840 },
+      { month: "Jan", users: calcNumbersOfUsersByMonth(0) },
+      { month: "Feb", users: calcNumbersOfUsersByMonth(1) },
+      { month: "Mar", users: calcNumbersOfUsersByMonth(2) },
+      { month: "Apr", users: calcNumbersOfUsersByMonth(3) },
+      { month: "May", users: calcNumbersOfUsersByMonth(4) },
+      { month: "Jun", users: calcNumbersOfUsersByMonth(5) },
+      { month: "Jul", users: calcNumbersOfUsersByMonth(6) },
+      { month: "Aug", users: calcNumbersOfUsersByMonth(7) },
+      { month: "Sep", users: calcNumbersOfUsersByMonth(8) },
+      { month: "Oct", users: calcNumbersOfUsersByMonth(9) },
+      { month: "Nov", users: calcNumbersOfUsersByMonth(10) },
+      { month: "Dec", users: calcNumbersOfUsersByMonth(11) },
 ]
 
   return (
@@ -123,7 +139,13 @@ const Dashboard = () => {
                      <XAxis dataKey="role" />
                      <YAxis />
                      <Tooltip />
-                     <Bar dataKey="users" fill="red" radius={[6, 6, 0, 0]} />
+                     <Bar dataKey="users" radius={[6, 6, 0, 0]}>
+                        {
+                           users.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={index === 0 ? "#f87171" : index === 1 ? "#60a5fa" : "#34d399"} />
+                           ))
+                        }                     
+                     </Bar>
                   </BarChart>
                </ResponsiveContainer>
             </div>
@@ -142,7 +164,7 @@ const Dashboard = () => {
                      <XAxis dataKey="month" />
                      <YAxis />
                      <Tooltip />
-                     <Area dataKey="users" fill="indigo" stroke="gray" type="monotone" radius={[6, 6, 0, 0]} />
+                     <Area dataKey="users" fill="#fbbf24" stroke="#fbbf24" fillOpacity={0.25} type="monotone" radius={[6, 6, 0, 0]} />
                   </AreaChart>
                </ResponsiveContainer>
             </div>

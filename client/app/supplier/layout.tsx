@@ -16,8 +16,9 @@ const AdminLayout = ({children} : {childern : React.ReactNode}) => {
    const router= useRouter();
    
 
-   const firstName = localStorage.getItem('firstName'); 
+   const [firstName, setFirstName] = useState(""); 
    useEffect(()=> {
+      setFirstName(localStorage.getItem('firstName'))
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role');
       const userId = localStorage.getItem('userId')
@@ -60,7 +61,7 @@ const AdminLayout = ({children} : {childern : React.ReactNode}) => {
    
 
   return (
-    <div className="w-full h-screen overflow-y-hidden flex">
+    <div className="w-full h-screen flex overflow-y-scroll">
       
       
       {/*  ---- Left Side Bar -------- */}
@@ -70,12 +71,12 @@ const AdminLayout = ({children} : {childern : React.ReactNode}) => {
       
          
          
-         <div className="flex-1 min-h-screen">
+         <div className="flex-1 h-screen">
          {/* -- Header --- */}
          <Header />
 
          {/* --- Pages ---- */}
-         <main className="px-10 py-4 w-full h-full  bg-gray-100">
+         <main className="px-10 py-4 w-full h-full overflow-y-scroll  bg-gray-100">
             {children}
          </main>
       

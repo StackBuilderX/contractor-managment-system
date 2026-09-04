@@ -30,7 +30,7 @@ const SupplierSideBar = () => {
    
 
   return (
-    <div className={`w-64 h-screen bg-white border-r border-gray-200 flex flex-col text-sm  ${outfit.variable}`}>
+    <div className={`w-64 h-screen  bg-white border-r sticky top-0 border-gray-200 flex flex-col text-sm  ${outfit.variable}`}>
 
       <div className="p-4 h-17 border-b border-gray-200">
          <p className='text-2xl font-semibold text-slate-800 text-center'> <span className="text-3xl text-green-600">S</span>tackFlow</p>

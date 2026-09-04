@@ -13,11 +13,6 @@ const AdminLayout = ({children} : {childern : React.ReactNode}) => {
 
    const router = useRouter()
    
-   
-
-   
-   
-
    useEffect(()=> {
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role')
