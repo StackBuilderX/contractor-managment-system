@@ -15,16 +15,22 @@ public class OrderItem {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
-    private BigDecimal price;
-
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false, unique = true)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    private BigDecimal unitPrice;
+
+    private BigDecimal totalPrice;
+
+
+
+
+//    ------ Getters && Setters ------------
 
     public Long getId() {
         return id;
@@ -42,14 +48,6 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public Order getOrder() {
         return order;
     }
@@ -64,5 +62,21 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

@@ -1,6 +1,7 @@
 package stackbuilder.backend.dto;
 
 import stackbuilder.backend.entity.ContractorStatus;
+import stackbuilder.backend.entity.Product;
 import stackbuilder.backend.entity.SupplierStatus;
 
 public class SupplierResponse {
@@ -18,6 +19,13 @@ public class SupplierResponse {
     private String city;
     private String address;
     private String description;
+
+
+    private int productsCount;
+    private int lowStockItems;
+    private int outOfStock;
+
+    private Long totalOrders;
 
 //    --- Getters && Setters -------
 
@@ -107,5 +115,37 @@ public class SupplierResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getProductsCount() {
+        return productsCount;
+    }
+
+    public void setProductsCount(int productsCount) {
+        this.productsCount = productsCount;
+    }
+
+    public int getLowStockItems() {
+        return lowStockItems;
+    }
+
+    public void setLowStockItems(int lowStockItems) {
+        this.lowStockItems = lowStockItems;
+    }
+
+    public int getOutOfStock() {
+        return outOfStock;
+    }
+
+    public void setOutOfStock(int outOfStock) {
+        this.outOfStock = outOfStock;
+    }
+
+    public Long getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(Long totalOrders) {
+        this.totalOrders = totalOrders;
     }
 }

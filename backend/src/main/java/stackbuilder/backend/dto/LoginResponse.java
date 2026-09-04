@@ -26,4 +26,28 @@ public class LoginResponse {
     }
 
     public Long getUserId() { return userId; }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+//    public Long getSupplierId() {
+//        return supplierId;
+//    }
+//
+//    public void setSupplierId(Long supplierId) {
+//        this.supplierId = supplierId;
+//    }
 }
