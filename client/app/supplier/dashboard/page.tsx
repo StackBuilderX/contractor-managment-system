@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Orders from "../orders/page";
 import { redirect } from "next/navigation";
+import { useSupplier } from "@/app/context/SupplierContext";
 
 
 
@@ -15,68 +16,12 @@ import { redirect } from "next/navigation";
 
 const SupplierDashboard = () => {
 
-   const [supplier, setSupplier] = useState({});
-   const [loading, setLoading] = useState(true);
-   const [orders, setOrders] = useState([]);
-   const [products, setProducts] = useState([]);
+   
 
 
-   const fetchSupplierById = async () => {
+   
 
-      try {
-         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/suppliers/${localStorage.getItem("userId")}`, {
-            method: "GET",
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-         });
-
-
-         if (!response.ok) {
-            throw new Error("Failed to fetch supplier data");
-            toast.error("Failed to fetch supplier data");
-         }
-
-         const data = await response.json();
-         // console.log(data);
-
-         setSupplier(data);
-      } catch (error) {
-         console.error("Error fetching supplier data:", error);
-         toast.error(error.message);
-      } finally {
-         setLoading(false);
-      }
-   }
-
-   const fetchOrdersBySupplierId = async () => {
-
-      try {
-
-         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/supplier/${localStorage.getItem("userId")}`, {
-            method: "GET",
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-         });
-
-         if (!response.ok) {
-            throw new Error("Failed to fetch orders data");
-            toast.error("Failed to fetch orders data");
-         }
-
-         const data = await response.json();
-         // console.log("Orders data", data);
-         setOrders(data);
-
-      } catch (error) {
-         console.error("Error fetching orders data:", error);
-         toast.error(error.message);
-      } finally {
-         setLoading(false);
-      }
-
-   }
+   const {orders, supplier, products, fetchSupplierById, fetchOrdersBySupplierId, fetchProducts} = useSupplier();
 
    const totalRevenu = orders.reduce((total, order) => total + order.totalPrice, 0).toLocaleString("en-US");
 
@@ -101,31 +46,7 @@ const SupplierDashboard = () => {
    });
 
    
-   const fetchProducts = async () => {
-      try {
-         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
-            method: "GET",
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-         })
-
-         if(!response.ok) {
-            throw new Error("Failted to fetch products")
-            toast.error("Failted to fetch products")
-         }
-
-         const data = await response.json()
-
-         console.log(data);
-         setProducts(data)
-
-
-      } catch (error) {
-         console.log(error.message);
-         toast.error(error.message)
-      }
-   }
+   
 
    useEffect(() => {
       fetchSupplierById();
@@ -164,32 +85,32 @@ const SupplierDashboard = () => {
       },];
 
 
-   const topProducts = [
-      {
-         name: "Portland Cement",
-         category: "Cement",
-         sold: "1,240 units",
-         revenue: "$14,880",
-      },
-      {
-         name: "Steel Rebar",
-         category: "Steel",
-         sold: "38 tons",
-         revenue: "$12,350",
-      },
-      {
-         name: "Ceramic Tiles",
-         category: "Finishing",
-         sold: "920 boxes",
-         revenue: "$10,120",
-      },
-      {
-         name: "Concrete Blocks",
-         category: "Construction",
-         sold: "2,400 units",
-         revenue: "$7,200",
-      },
-   ];
+   // const topProducts = [
+   //    {
+   //       name: "Portland Cement",
+   //       category: "Cement",
+   //       sold: "1,240 units",
+   //       revenue: "$14,880",
+   //    },
+   //    {
+   //       name: "Steel Rebar",
+   //       category: "Steel",
+   //       sold: "38 tons",
+   //       revenue: "$12,350",
+   //    },
+   //    {
+   //       name: "Ceramic Tiles",
+   //       category: "Finishing",
+   //       sold: "920 boxes",
+   //       revenue: "$10,120",
+   //    },
+   //    {
+   //       name: "Concrete Blocks",
+   //       category: "Construction",
+   //       sold: "2,400 units",
+   //       revenue: "$7,200",
+   //    },
+   // ];
    return (
       <main className="min-h-screen bg-[#f8fafc] p-6 lg:p-8">
          <div className="mx-auto max-w-7xl space-y-8">
@@ -307,7 +228,7 @@ const SupplierDashboard = () => {
                   <div className="mt-4 flex justify-between px-1 text-xs text-slate-400">
 
                      {
-                        salesOverview.map((item, idx) => <span>{item.name}</span>)
+                        salesOverview.map((item, idx) => <span key={idx}>{item.name}</span>)
                      }
          
                   </div>
@@ -447,7 +368,7 @@ const SupplierDashboard = () => {
                                     </div>
 
                                     <div className="mt-0.5 text-xs text-slate-400">
-                                       {order.items[0].quantity} {order.items[0].productnit}
+                                       {order.items[0].quantity} {order.items[0].productUnit}
                                     </div>
                                  </td>
 

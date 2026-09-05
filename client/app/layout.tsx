@@ -4,6 +4,7 @@ import "./globals.css";
 import ToasterProvider from "@/components/ToasterProvider";
 import { UserProvider } from "./context/UserContext";
 import { ReactNode } from "react";
+import { SupplierProvider } from "./context/SupplierContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: Readonly<{ children : ReactNode
       <body className="min-h-full flex flex-col">
          <ToasterProvider />
             <UserProvider >
-               {children}
+               <SupplierProvider>
+                  {children}
+               </SupplierProvider>
             </UserProvider>         
       </body>
     </html>
