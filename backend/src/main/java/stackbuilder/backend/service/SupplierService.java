@@ -27,8 +27,36 @@ public class SupplierService {
         this.orderRepository = orderRepository;
     }
 
+// ------- Get All Suppliers -----------------
+    public List<SupplierResponse> getAllSuppliers() {
+        return supplierRepository.findAll().stream().map(supplier -> {
+            User user = supplier.getUser();
+            SupplierResponse response = new SupplierResponse();
+
+            response.setId(supplier.getId());
+            response.setUserId(user.getId());
+            response.setFirstName(user.getFirstName());
+            response.setLastName(user.getLastName());
+            response.setPhone(user.getPhone());
+            response.setEmail(user.getEmail());
+            response.setStatus(supplier.getStatus());
+            response.setCompanyName(supplier.getCompanyName());
+            response.setCity(supplier.getCity());
+            response.setAddress(supplier.getAddress());
+            response.setDescription(supplier.getDescription());
+            response.setProductsCount(productRepository.countBySupplierId(supplier.getId()));
+            response.setLowStockItems(productRepository.countLowStockItemsBySupplierId(supplier.getId()));
+
+            Long totalOrders = orderRepository.countBySupplierId(supplier.getId());
+            response.setTotalOrders(totalOrders);
 
 
+            return response;
+
+        }).toList();
+    }
+
+// ------------ Get Supplier By User id -------------
     public SupplierResponse getSupplierById(Long id) {
          Supplier supplier = supplierRepository.findByUser_id(id).orElseThrow(() -> new RuntimeException("Supplier Not Found"));
 
@@ -94,33 +122,7 @@ public class SupplierService {
 
 
 
-    public List<SupplierResponse> getAllSuppliers() {
-        return supplierRepository.findAll().stream().map(supplier -> {
-            User user = supplier.getUser();
-            SupplierResponse response = new SupplierResponse();
 
-            response.setId(supplier.getId());
-            response.setUserId(user.getId());
-            response.setFirstName(user.getFirstName());
-            response.setLastName(user.getLastName());
-            response.setPhone(user.getPhone());
-            response.setEmail(user.getEmail());
-            response.setStatus(supplier.getStatus());
-            response.setCompanyName(supplier.getCompanyName());
-            response.setCity(supplier.getCity());
-            response.setAddress(supplier.getAddress());
-            response.setDescription(supplier.getDescription());
-            response.setProductsCount(productRepository.countBySupplierId(supplier.getId()));
-            response.setLowStockItems(productRepository.countLowStockItemsBySupplierId(supplier.getId()));
-
-            Long totalOrders = orderRepository.countBySupplierId(supplier.getId());
-            response.setTotalOrders(totalOrders);
-
-
-            return response;
-
-        }).toList();
-    }
 
 }
 

@@ -1,114 +1,75 @@
-package stackbuilder.backend.entity;
+package stackbuilder.backend.dto;
 
 
-import jakarta.persistence.*;
-
+import stackbuilder.backend.entity.ProjectStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "projects")
-public class Project {
+public class ProjectDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
+    private Long contractorId;
 
     private String type;
-
-    @ManyToOne
-    @JoinColumn(name = "contractor_id", nullable = false)
-    private Contractor contractor;
-
     private String location;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ProjectStatus status;
 
     private LocalDate startDate;
-
     private LocalDate endDate;
 
-    @Column(precision = 15, scale = 2)
     private BigDecimal budget;
-
-    @Column(precision = 15, scale = 2)
     private BigDecimal spent;
 
-    @Column(nullable = false)
-    private Integer progress = 0;
-
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private Integer totalTasks = 0 ;
-
-    @Column(nullable = false)
+    private Integer progress;
+    private Integer totalTasks;
     private Integer completedTasks;
 
-    @ElementCollection
-    @CollectionTable(name = "project_materials", joinColumns = @JoinColumn(name = "project_id"))
-    @Column(name = "material")
-    private List<String> materials = new ArrayList<>();
+    private List<String> materials;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-        if (status == null) {
-            status = ProjectStatus.PLANNING;
-        }
-        if (progress == null) {  progress = 0;  }
-
-        if (spent == null) { spent = BigDecimal.ZERO ;}
-
-        if (totalTasks == null) { totalTasks =0; }
-
-        if (completedTasks == null) { completedTasks = 0 ;}
-
-        if (materials == null) {
-            materials = new ArrayList<>();
-        }
+    public ProjectDTO() {
     }
 
-//    ---- Constructors --------
-    public  Project() {}
-    public Project(String name, String description, Contractor contractor, String location, ProjectStatus status, LocalDate startDate, LocalDate endDate, BigDecimal budget, Integer progress, BigDecimal spent, String type, Integer totalTasks, Integer completedTasks, List<String> materials) {
-
+    public ProjectDTO(
+            Long id,
+            String name,
+            String description,
+            Long contractorId,
+            String type,
+            String location,
+            ProjectStatus status,
+            LocalDate startDate,
+            LocalDate endDate,
+            BigDecimal budget,
+            BigDecimal spent,
+            Integer progress,
+            Integer totalTasks,
+            Integer completedTasks,
+            List<String> materials,
+            LocalDateTime createdAt
+    ) {
+        this.id = id;
         this.name = name;
         this.description = description;
-        this.contractor = contractor;
+        this.contractorId = contractorId;
+        this.type = type;
         this.location = location;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
         this.budget = budget;
-        this.progress = progress;
-        this.materials = materials;
         this.spent = spent;
-        this.type = type;
+        this.progress = progress;
         this.totalTasks = totalTasks;
         this.completedTasks = completedTasks;
-
-
+        this.materials = materials;
+        this.createdAt = createdAt;
     }
-
-
-
-
-//    ----- Getters && Setters ------
-
 
     public Long getId() {
         return id;
@@ -118,12 +79,12 @@ public class Project {
         this.id = id;
     }
 
-    public Contractor getContractor() {
-        return contractor;
+    public String getName() {
+        return name;
     }
 
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -134,12 +95,12 @@ public class Project {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public Long getContractorId() {
+        return contractorId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContractorId(Long contractorId) {
+        this.contractorId = contractorId;
     }
 
     public String getLocation() {
@@ -238,3 +199,4 @@ public class Project {
         this.materials = materials;
     }
 }
+

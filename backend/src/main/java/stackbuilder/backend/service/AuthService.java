@@ -62,7 +62,7 @@ public class AuthService {
              supplierRepository.save(supplier);
          }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user);
         return new RegisterResponse(token, user.getRole().name(), user.getFirstName(), user.getId());
     }
 
@@ -78,7 +78,7 @@ public class AuthService {
             throw new UnauthorizedException("Invalid email or password");
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user);
 
         return new LoginResponse(token, user.getRole().name(), user.getFirstName(), user.getId());
     }

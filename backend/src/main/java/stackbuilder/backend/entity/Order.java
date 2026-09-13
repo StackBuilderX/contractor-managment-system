@@ -17,8 +17,15 @@ public class Order {
     @Column(nullable = false)
     private BigDecimal totalPrice;
 
+    @Column(nullable = true)
+    private BigDecimal paidAmount;
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private PaymentStatus paymentStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private OrderStatus status;
 
     @ManyToOne
@@ -73,6 +80,22 @@ public class Order {
 
     public Contractor getContractor() {
         return contractor;
+    }
+
+    public BigDecimal getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(BigDecimal paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public void setContractor(Contractor contractor) {

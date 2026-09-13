@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import stackbuilder.backend.entity.Product;
 
+import java.util.List;
+import java.util.Optional;
+
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -16,5 +19,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT COUNT(p) FROM Product p WHERE p.supplier.id = :supplierId AND p.stock = 0")
     int countOutOfStockBySupplierId(@Param("supplierId") Long supplierId);
+
+    @Query("SELECT p FROM Product p WHERE p.supplier.id = :supplierId")
+    List<Product> findAllBySupplierId(@Param("supplierId") Long supplierId);
+
 
 }

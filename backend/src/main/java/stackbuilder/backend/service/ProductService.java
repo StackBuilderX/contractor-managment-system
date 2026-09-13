@@ -14,9 +14,11 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
+    private SupplierRepository supplierRepository;
 
-    public  ProductService (ProductRepository productRepository) {
+    public  ProductService (ProductRepository productRepository, SupplierRepository supplierRepository) {
         this.productRepository = productRepository;
+        this.supplierRepository = supplierRepository;
     }
 
     public Product createProduct(Product product) {
@@ -27,7 +29,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public  List<Product> getAllProductsBySupplierId(Long id) {
+        Supplier supplier = supplierRepository.findByUser_id(id).orElseThrow(() -> new RuntimeException("Supplier Not Found"));
 
+        return productRepository.findAllBySupplierId(supplier.getId());
+    }
 
 
 

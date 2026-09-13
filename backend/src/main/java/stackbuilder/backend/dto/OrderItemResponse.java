@@ -10,10 +10,6 @@ public class OrderItemResponse {
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
 
-//    private Long productId;
-//    private Integer quantity;
-//    private BigDecimal unitPrice;
-//    private BigDecimal totalPrice;
 
 
 //    ------ Getters && Setters --------------
