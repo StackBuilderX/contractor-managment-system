@@ -66,9 +66,9 @@ export const UserProvider = ({ children }: {children : ReactNode}) => {
          setUserId(storedUserId);
    }, [])
 
-   useEffect(() => {
-         
+   
 
+   useEffect(() => {
       const fetchCurrentUser = async () => {
 
          try {
@@ -105,7 +105,6 @@ export const UserProvider = ({ children }: {children : ReactNode}) => {
             setLoading(false)
          }
       }
-
 
       fetchCurrentUser()
 

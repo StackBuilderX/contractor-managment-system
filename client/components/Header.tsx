@@ -14,7 +14,7 @@ const Header = () => {
    
 
   return (
-    <div className="py-2 px-8 z-50 border-b sticky top-0 border-gray-200 flex backdrop-blur-md items-center justify-between">
+    <div className="py-2 px-8 z-100 border-b sticky top-0 border-gray-200 flex backdrop-blur-md items-center justify-between">
             <div>
                <h2 className="text-gray-800 text-2xl font-semibold">Welcome back <span className={`${user?.role === "ADMIN" ? "text-indigo-500" : user?.role === "CONTRACTOR" ? "text-blue-500" : "text-green-500"} `}>{user?.firstName}</span></h2>
                <p className="text-sm text-gray-500">here's an overview of your platform statistics.</p>

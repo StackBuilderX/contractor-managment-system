@@ -1,5 +1,6 @@
 
 
+
 export interface User = {
    id: number,
    firsName: string,
@@ -9,3 +10,5 @@ export interface User = {
    phone: string,
    profileImage: string
 }
+
+

@@ -35,7 +35,7 @@ const ContractorLayout = ({children} : {childern : React.ReactNode}) => {
    
 
   return (
-    <div className="w-full h-screen overflow-y-hidden flex">
+    <div className="w-full h-screen overflow-y-scroll flex">
       
       
       {/*  ---- Left Side Bar -------- */}
@@ -51,7 +51,7 @@ const ContractorLayout = ({children} : {childern : React.ReactNode}) => {
          <Header />
 
          {/* --- Pages ---- */}
-         <main className="px-10 py-4 w-full h-full  bg-gray-100">
+         <main className="px-10 py-4 w-full h-full    bg-gray-100">
             {children}
          </main>
       

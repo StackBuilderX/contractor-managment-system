@@ -36,7 +36,7 @@ const Contractors = () => {
             })
 
             if(!response.ok) {
-               throw new Error("Failed to fetch contractors")
+               throw new Error("Failed to fetch contractors");
                toast.error("Failed to fetch contractors")
             }
 

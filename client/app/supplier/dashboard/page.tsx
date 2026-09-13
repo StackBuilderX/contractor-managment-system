@@ -58,29 +58,29 @@ const SupplierDashboard = () => {
       {
          title: "Total Products",
          value: supplier.productsCount,
-         change: "+12.5%",
+         change: "--%" ,
          positive: true,
          icon: Package,
       },
       {
          title: "Total Orders",
          value: supplier.totalOrders,
-         change: "+8.2%",
+         change: "--%",
          positive: true,
          icon: ShoppingCart,
       },
       {
          title: "Total Revenue",
          value: "$" + totalRevenu,
-         change: "+14.8%",
+         change: "--%",
          positive: true,
          icon: DollarSign,
       },
       {
          title: "Low Stock Items",
          value: supplier.lowStockItems,
-         change: "-4.3%",
-         positive: true,
+         change: "--%",
+         positive: false,
          icon: Boxes,
       },];
 

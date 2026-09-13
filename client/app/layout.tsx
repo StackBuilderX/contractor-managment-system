@@ -5,6 +5,7 @@ import ToasterProvider from "@/components/ToasterProvider";
 import { UserProvider } from "./context/UserContext";
 import { ReactNode } from "react";
 import { SupplierProvider } from "./context/SupplierContext";
+import { ContractorProvider } from "./context/ContractorContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,9 @@ export default function RootLayout({ children }: Readonly<{ children : ReactNode
          <ToasterProvider />
             <UserProvider >
                <SupplierProvider>
-                  {children}
+                  <ContractorProvider>
+                     {children}
+                  </ContractorProvider>                  
                </SupplierProvider>
             </UserProvider>         
       </body>
