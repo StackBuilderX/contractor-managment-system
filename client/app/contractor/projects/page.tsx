@@ -600,7 +600,7 @@ export default function ContractorProjectsPage({children} : {childern : React.Re
 
               <div className="space-y-2">
 
-                <button onClick={() => redirect(`/contractor/projects/${activeProject.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
+                <button onClick={() => redirect(`/contractor/projects/${activeProject?.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
                   <span className="flex items-center gap-3 text-sm">
                     <Package size={17} />
                     Material requests
@@ -609,7 +609,7 @@ export default function ContractorProjectsPage({children} : {childern : React.Re
                   <ChevronRight size={16} className="text-slate-400" />
                 </button>
 
-                <button onClick={() => redirect(`/contractor/projects/${activeProject.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
+                <button onClick={() => redirect(`/contractor/projects/${activeProject?.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
                   <span className="flex items-center gap-3 text-sm">
                     <CalendarDays size={17} />
                     Project schedule
@@ -618,7 +618,7 @@ export default function ContractorProjectsPage({children} : {childern : React.Re
                   <ChevronRight size={16} className="text-slate-400" />
                 </button>
 
-                <button onClick={() => redirect(`/contractor/projects/${activeProject.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
+                <button onClick={() => redirect(`/contractor/projects/${activeProject?.id}`)} className="flex cursor-pointer w-full items-center justify-between rounded-xl p-3 text-left transition hover:bg-slate-50">
                   <span className="flex items-center gap-3 text-sm">
                     <DollarSign size={17} />
                     Financial overview

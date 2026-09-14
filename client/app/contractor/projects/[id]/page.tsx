@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useContractor } from "@/app/context/ContractorContext";
+import { useParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function ProjectWorkspace() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -90,12 +92,52 @@ export default function ProjectWorkspace() {
     },
   ];
 
-  const [project, setProject] = useState({});
+//   const [project, setProject] = useState({});
 
  const [loading, setLoading] = useState(true)
 
-   const {projects} =  useContractor()
    
+   const [project, setProject] = useState({});
+   
+  const params = useParams()
+  const id = params.id;
+
+  
+  const fetchProjectById = async () => {
+
+   try {
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`, {
+         method: "GET",
+         headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+         }});
+
+         if(!response.ok) {
+            throw new Error("Failed to fetch project")
+            toast.error("Failed to fetch project")
+         }
+
+         const data = await response.json();
+
+         setProject(data)
+      
+   } catch (error) {
+      console.log(error);
+      
+   }
+  }
+
+  useEffect(()=>{
+   fetchProjectById()
+   setLoading(false)
+  },[])
+
+
+  console.log(id);
+  console.log(project);
+  
+
 
 
 
@@ -189,7 +231,7 @@ export default function ProjectWorkspace() {
 
             <Stat
               label="Deadline"
-              value="Mar 15, 2027"
+              value={new Date(project?.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric"})}
               icon={<CalendarDays size={18} />}
             />
           </div>
@@ -249,8 +291,8 @@ export default function ProjectWorkspace() {
                 </div>
 
                 <div className="mt-5 flex justify-between text-xs text-slate-400">
-                  <span>Sep 11, 2026</span>
-                  <span>Mar 15, 2027</span>
+                  <span>{new Date(project?.startDate).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"})}</span>
+                  <span>{new Date(project?.endDate).toLocaleDateString("en-US", { month: 'short', day: "numeric", year: "numeric"})}</span>
                 </div>
               </div>
 
@@ -308,7 +350,7 @@ export default function ProjectWorkspace() {
               </div>
 
               <div className="divide-y divide-slate-100">
-                {materialRequests.map((request) => (
+                {project.materials.map((request) => (
                   <div
                     key={request.id}
                     className="flex flex-col gap-4 p-6 transition hover:bg-slate-50 lg:flex-row lg:items-center lg:justify-between"
@@ -320,11 +362,13 @@ export default function ProjectWorkspace() {
 
                       <div>
                         <h3 className="font-semibold text-slate-900">
-                          {request.material}
+                          {request.title}
                         </h3>
 
-                        <p className="mt-1 text-sm text-slate-500">
-                          {request.quantity} • {request.supplier}
+                        <p className="mt-1 text-sm text-slate-500 flex items-center gap-4 ">
+                          {request.items.map((prod)=> (
+                           <span className="text-xs flex items-center gap-4 px-2 py-1 rounded-full border border-gray-200" key={prod.id}> {prod.quantity} {prod.product.unit} {(prod.product.name).split(" ")[0]} </span>
+                          ))} • <span>{request.supplierCompanyName}</span>
                         </p>
                       </div>
                     </div>
@@ -335,7 +379,7 @@ export default function ProjectWorkspace() {
                           Requested
                         </p>
                         <p className="mt-1 text-sm text-slate-600">
-                          {request.date}
+                          {new Date(request.expectedDelivery).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric"})}
                         </p>
                       </div>
 
@@ -481,9 +525,9 @@ function Stat({ label, value, icon }) {
 
 function StatusBadge({ status }) {
   const styles = {
-    Pending: "bg-amber-50 text-amber-700",
-    Accepted: "bg-blue-50 text-blue-700",
-    Delivered: "bg-emerald-50 text-emerald-700",
+    PENDING: "bg-amber-50 text-amber-700",
+    ACCEPTED: "bg-blue-50 text-blue-700",
+    DELIVERED: "bg-emerald-50 text-emerald-700",
   };
 
   return (
