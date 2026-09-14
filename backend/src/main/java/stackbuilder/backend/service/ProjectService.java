@@ -1,11 +1,11 @@
 package stackbuilder.backend.service;
 
 import org.springframework.stereotype.Service;
+import stackbuilder.backend.dto.ProductOptimizeDTO;
 import stackbuilder.backend.dto.ProjectDTO;
-import stackbuilder.backend.dto.RequestItemDTO;
-import stackbuilder.backend.entity.Contractor;
-import stackbuilder.backend.entity.Project;
-import stackbuilder.backend.entity.Request;
+import stackbuilder.backend.dto.RequestItemOptimizeDTO;
+import stackbuilder.backend.dto.RequestOptimizeDTO;
+import stackbuilder.backend.entity.*;
 import stackbuilder.backend.repository.ContractorRepository;
 import stackbuilder.backend.repository.ProjectRepository;
 import stackbuilder.backend.repository.RequestRepository;
@@ -49,7 +49,7 @@ public class ProjectService {
 
         return convertToDTO(project);
     }
-//
+
 //    // Create project
     public ProjectDTO createProject(ProjectDTO dto) {
 
@@ -71,10 +71,82 @@ public class ProjectService {
         project.setProgress(dto.getProgress());
 
 
+
         Project savedProject = projectRepository.save(project);
 
         return convertToDTO(savedProject);
     }
+
+
+
+
+    // Convert Entity -> DTO
+    private ProjectDTO convertToDTO(Project project) {
+
+        List<RequestOptimizeDTO> materials = requestRepository.findByProjectId(project.getId()).stream().map(this::convertRequestToOptimizeDTO).toList();
+        return new ProjectDTO(
+                project.getId(),
+                project.getName(),
+                project.getDescription(),
+                project.getContractor().getId(),
+                project.getType(),
+                project.getLocation(),
+                project.getStatus(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getBudget(),
+                project.getSpent(),
+                project.getProgress(),
+                project.getTotalTasks(),
+                project.getCompletedTasks(),
+                materials,
+                project.getCreatedAt()
+        );
+    }
+
+    // Convert Request to Optimize Request
+    private RequestOptimizeDTO convertRequestToOptimizeDTO(Request request) {
+
+        List <RequestItemOptimizeDTO> items = request.getItems().stream().map(this::convertRequestItemToOptimizeDTO).toList();
+
+        return  new RequestOptimizeDTO(
+                request.getId(),
+                request.getSupplier().getCompanyName(),
+                request.getStatus(),
+                request.getTitle(),
+                request.getTotal(),
+                request.getExpectedDelivery(),
+                request.getPriority(),
+                items
+        );
+    }
+
+    //    convert RequestItem to RequestItemOptimize
+    private RequestItemOptimizeDTO convertRequestItemToOptimizeDTO(RequestItem item) {
+
+        Product product = item.getProduct();
+
+        ProductOptimizeDTO productDto = new ProductOptimizeDTO(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getUnit(),
+                product.getImageUrl()
+        );
+
+        return new RequestItemOptimizeDTO(
+                item.getId(),
+                item.getQuantity(),
+                productDto
+        );
+
+    }
+}
+
+
+
+
+
 //
 //    // Update project
 //    public ProjectDTO updateProject(Long id, ProjectDTO dto) {
@@ -114,33 +186,4 @@ public class ProjectService {
 //
 //        projectRepository.deleteById(id);
 //    }
-
-    // Convert Entity -> DTO
-    private ProjectDTO convertToDTO(Project project) {
-
-
-        List<Request> requests = requestRepository.findByProjectId(project.getId());
-
-        List<String> materials = requests.stream().flatMap(request -> request.getItems().stream()).map(item -> item.getProduct().getName()).distinct().toList();
-
-        return new ProjectDTO(
-                project.getId(),
-                project.getName(),
-                project.getDescription(),
-                project.getContractor().getId(),
-                project.getType(),
-                project.getLocation(),
-                project.getStatus(),
-                project.getStartDate(),
-                project.getEndDate(),
-                project.getBudget(),
-                project.getSpent(),
-                project.getProgress(),
-                project.getTotalTasks(),
-                project.getCompletedTasks(),
-                materials,
-                project.getCreatedAt()
-        );
-    }
-}
 

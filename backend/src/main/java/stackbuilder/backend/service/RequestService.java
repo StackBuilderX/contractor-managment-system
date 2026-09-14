@@ -3,10 +3,7 @@ package stackbuilder.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import stackbuilder.backend.dto.RequestDTO;
-import stackbuilder.backend.dto.RequestItemDTO;
-import stackbuilder.backend.dto.RequestItemResponseDTO;
-import stackbuilder.backend.dto.RequestResponseDTO;
+import stackbuilder.backend.dto.*;
 import stackbuilder.backend.entity.*;
 import stackbuilder.backend.repository.*;
 
@@ -144,4 +141,28 @@ public class RequestService {
 
         return requests.stream().map(this::mapToResponseDTO).toList();
     }
+
+
+    public List<SupplierMinimizeDTO> getAllSupplierMinimized() {
+        List<SupplierMinimizeDTO> suppliers = supplierRepository.findAll().stream().map(this::convertToSupplierMinimized).toList();
+
+        return suppliers;
+    }
+
+
+
+
+//    convert Normal Suppliers To--> Suppliers Minimized
+    public SupplierMinimizeDTO convertToSupplierMinimized(Supplier supplier) {
+        List<Product> products = productRepository.findAllBySupplierId(supplier.getId());
+        return new SupplierMinimizeDTO(
+          supplier.getId(),
+          supplier.getCompanyName(),
+          supplier.getCity(),
+          supplier.getAddress(),
+          supplier.getDescription(),
+          products
+        );
+    }
+
 }

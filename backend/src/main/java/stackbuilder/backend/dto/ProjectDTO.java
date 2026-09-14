@@ -2,6 +2,7 @@ package stackbuilder.backend.dto;
 
 
 import stackbuilder.backend.entity.ProjectStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class ProjectDTO {
     private Integer totalTasks;
     private Integer completedTasks;
 
-    private List<String> materials;
+    private List<RequestOptimizeDTO> materials;
 
     private LocalDateTime createdAt;
 
@@ -50,7 +51,7 @@ public class ProjectDTO {
             Integer progress,
             Integer totalTasks,
             Integer completedTasks,
-            List<String> materials,
+            List<RequestOptimizeDTO> materials,
             LocalDateTime createdAt
     ) {
         this.id = id;
@@ -191,11 +192,11 @@ public class ProjectDTO {
         this.completedTasks = completedTasks;
     }
 
-    public List<String> getMaterials() {
+    public List<RequestOptimizeDTO> getMaterials() {
         return materials;
     }
 
-    public void setMaterials(List<String> materials) {
+    public void setMaterials(List<RequestOptimizeDTO> materials) {
         this.materials = materials;
     }
 }

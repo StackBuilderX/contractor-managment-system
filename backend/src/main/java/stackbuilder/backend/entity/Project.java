@@ -60,7 +60,7 @@ public class Project {
     @ElementCollection
     @CollectionTable(name = "project_materials", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "material")
-    private List<String> materials = new ArrayList<>();
+    private List<Request> materials = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -84,7 +84,7 @@ public class Project {
 
 //    ---- Constructors --------
     public  Project() {}
-    public Project(String name, String description, Contractor contractor, String location, ProjectStatus status, LocalDate startDate, LocalDate endDate, BigDecimal budget, Integer progress, BigDecimal spent, String type, Integer totalTasks, Integer completedTasks, List<String> materials) {
+    public Project(String name, String description, Contractor contractor, String location, ProjectStatus status, LocalDate startDate, LocalDate endDate, BigDecimal budget, Integer progress, BigDecimal spent, String type, Integer totalTasks, Integer completedTasks, List<Request> materials) {
 
         this.name = name;
         this.description = description;
@@ -230,11 +230,11 @@ public class Project {
         this.completedTasks = completedTasks;
     }
 
-    public List<String> getMaterials() {
+    public List<Request> getMaterials() {
         return materials;
     }
 
-    public void setMaterials(List<String> materials) {
+    public void setMaterials(List<Request> materials) {
         this.materials = materials;
     }
 }

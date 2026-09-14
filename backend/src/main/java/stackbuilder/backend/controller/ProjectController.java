@@ -27,4 +27,9 @@ public class ProjectController {
         return projectService.createProject(dto);
     }
 
+    @GetMapping("/{id}")
+    public ProjectDTO getProjectById(@PathVariable Long id) {
+        return projectService.getProjectById(id);
+    }
+
 }
